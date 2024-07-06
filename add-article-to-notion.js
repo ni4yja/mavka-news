@@ -1,5 +1,8 @@
 import process from 'node:process'
 import { Client } from '@notionhq/client'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const { DATABASE_ID, NOTION_TOKEN } = process.env
 
