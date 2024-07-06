@@ -48,6 +48,11 @@ export async function addArticleToNotionDatabase(article) {
             },
           ],
         },
+        Published: {
+          date: {
+            start: article.date,
+          },
+        },
       },
       children: [
         {

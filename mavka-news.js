@@ -16,20 +16,22 @@ async function scrapeNews() {
       articleNodes.forEach((article) => {
         const titleElement = article.querySelector('.title a')
         const summaryElement = article.querySelector('.summary')
+        const authorElement = article.querySelector('.author')
+        const dateElement = article.querySelector('time[datetime]')
 
         const title = titleElement ? titleElement.textContent : null
-        const author = article.querySelector('.author') ? article.querySelector('.author').textContent : null
+        const author = authorElement ? authorElement.textContent : null
         const link = titleElement ? titleElement.href : null
         const summary = summaryElement ? summaryElement.textContent : null
+        const date = dateElement ? dateElement.getAttribute('datetime') : null
 
-        if (title && link)
-          articleList.push({ title, author, link, summary })
+        if (title && link && date)
+          articleList.push({ title, author, link, summary, date })
       })
 
       return articleList
     })
 
-    // console.log(articles)
     fs.appendFileSync('/Users/k2/Development/mavka/logfile.log', `${JSON.stringify(articles)}\n`)
 
     for (const article of articles) await addArticleToNotionDatabase(article)
