@@ -8,6 +8,8 @@
     "@antfu/eslint-config": "^1.0.0-beta.2",
     "@notionhq/client": "^2.2.15",
     "dotenv": "^16.4.5",
+    "leveldown": "^6.1.1",
+    "levelup": "^5.1.1",
     "puppeteer": "^22.12.1"
   }
 }

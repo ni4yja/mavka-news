@@ -1,6 +1,6 @@
 import process from 'node:process'
-import { Client } from '@notionhq/client'
 import dotenv from 'dotenv'
+import { Client } from '@notionhq/client'
 
 dotenv.config()
 
@@ -31,7 +31,7 @@ export async function addArticleToNotionDatabase(article) {
             {
               type: 'text',
               text: {
-                content: article.author,
+                content: article.author || '',
               },
               annotations: {
                 italic: true,
@@ -43,7 +43,7 @@ export async function addArticleToNotionDatabase(article) {
           rich_text: [
             {
               text: {
-                content: article.summary ? article.summary : '',
+                content: article.summary || '',
               },
             },
           ],

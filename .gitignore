@@ -1,4 +1,5 @@
 node_modules
+article-db
 .DS_Store
 .vscode
 .env
