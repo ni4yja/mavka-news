@@ -85,3 +85,20 @@ export async function addArticleToNotionDatabase(article) {
     console.error('Error adding article to Notion:', error)
   }
 }
+
+export async function getArticlesFromNotionDatabase() {
+  try {
+    const response = await notion.databases.query({ database_id: databaseId })
+    return response.results.map(page => ({
+      title: page.properties.Name.title[0]?.text.content || '',
+      link: page.properties.Link.url || '',
+      author: page.properties.Author.rich_text[0]?.text.content || '',
+      summary: page.properties.Summary.rich_text[0]?.text.content || '',
+      date: page.properties.Published.date.start || '',
+    }))
+  }
+  catch (error) {
+    console.error('Error fetching articles from Notion:', error)
+    return []
+  }
+}

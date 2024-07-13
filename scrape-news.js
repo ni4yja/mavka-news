@@ -1,5 +1,5 @@
-import fs from 'node:fs'
 import process from 'node:process'
+import fs from 'node:fs'
 import dotenv from 'dotenv'
 import puppeteer from 'puppeteer'
 import db from './db.js'
@@ -31,11 +31,14 @@ export async function scrapeNews() {
         const date = dateElement ? dateElement.getAttribute('datetime') : null
 
         if (title && link && date)
-          articleList.push({ title, author, link, summary, date })
+          articleList.push({ title, author, link, summary, date, isSynced: false })
       })
 
       return articleList
     })
+
+    if (articles.length === 0)
+      console.warn('No articles found.')
 
     fs.appendFileSync(PATH_TO_LOGFILE, `${JSON.stringify(articles)}\n`)
 
@@ -50,8 +53,10 @@ export async function scrapeNews() {
         throw err
       })
 
-      if (!exists)
+      if (!exists) {
         await db.put(article.link, JSON.stringify(article))
+        console.warn('Article saved to LevelDB:', article.title)
+      }
     }
 
     await browser.close()
